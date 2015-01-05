@@ -1,3 +1,5 @@
+ #!/usr/bin/python
+# -*- coding: utf8 -*-
 import sqlite3
 import codecs
 
@@ -14,7 +16,7 @@ def render_highest_votes_page():
         conn = sqlite3.connect('votes.sqlite3')
         conn.row_factory = dict_factory
         c = conn.cursor()
-        for row in c.execute('select * from votes group by title order by AVG(votes_count) desc limit %d' % (num,)):
+        for row in c.execute(u'select * from votes where title not like \'%%הצעת אי-אמון%%\' group by title order by AVG(votes_count) desc limit %d' % (num,)):
             f.write('<tr>')
 
             vote_id = list(filter(lambda x: len(x) > 0, row['resource_uri'].split('/')))[-1]
