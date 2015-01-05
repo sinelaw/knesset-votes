@@ -14,10 +14,13 @@ def render_highest_votes_page():
         conn = sqlite3.connect('votes.sqlite3')
         conn.row_factory = dict_factory
         c = conn.cursor()
-        for row in c.execute('select * from votes order by votes_count desc limit %d' % (num,)):
+        for row in c.execute('select * from votes group by title order by AVG(votes_count) desc limit %d' % (num,)):
             f.write('<tr>')
 
-            titles = ['title', 'votes_count', 'for_votes_count', 'against_votes_count']
+            vote_id = list(filter(lambda x: len(x) > 0, row['resource_uri'].split('/')))[-1]
+            vote_link = 'https://oknesset.org/vote/' + vote_id
+            f.write('<td class="title"><a href="%s">%s</a></td>' % (vote_link, row['title'],))
+            titles = ['votes_count', 'for_votes_count', 'against_votes_count']
             for k in titles:
                 f.write('<td class="%s">%s</td>' % (k, row[k]))
             f.write('</tr>\n')
