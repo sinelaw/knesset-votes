@@ -1,0 +1,16 @@
+{
+  "name": "votes-tree",
+  "version": "0.0.0",
+  "authors": [
+    "Noam Lewis"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
